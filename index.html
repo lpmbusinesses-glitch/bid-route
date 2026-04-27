@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bid Route — Done-For-You Automation for Construction Companies</title>
+<meta name="description" content="Bid Route builds custom automation systems for construction companies. Capture leads instantly, follow up automatically, and stop losing jobs to slow response times.">
+<meta property="og:title" content="Bid Route — Stop Losing Jobs to Slow Response">
+<meta property="og:description" content="We build custom automation systems for concrete and construction companies. Done-for-you setup. No tech knowledge needed.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:       #0C0C0B;
+  --surface:  #141413;
+  --surface2: #1A1A18;
+  --border:   #272724;
+  --border2:  #333330;
+  --orange:   #E85D0A;
+  --orange2:  #FF7A2F;
+  --text:     #F2EEE8;
+  --muted:    #8A8780;
+  --muted2:   #5A5855;
+  --green:    #5DBB7A;
+  --ff-head:  'Barlow Condensed', sans-serif;
+  --ff-body:  'Barlow', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--ff-body);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── UTILS ── */
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 20px;
+}
+.tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--orange); }
+
+.section-head { margin-bottom: 56px; max-width: 580px; }
+.section-head h2 {
+  font-family: var(--ff-head);
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.section-head h2 em { font-style: normal; color: var(--orange); }
+.section-head p { font-size: 16px; color: var(--muted); line-height: 1.75; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: 64px; padding: 0 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(12,12,11,0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--ff-head);
+  font-size: 24px; font-weight: 900;
+  letter-spacing: 0.06em; color: var(--text);
+}
+.nav-logo span { color: var(--orange); }
+
+.nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+.nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: 0.03em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+
+.nav-cta {
+  background: var(--orange); color: #fff !important;
+  padding: 9px 20px; border-radius: 4px;
+  font-size: 13px !important; font-weight: 700 !important;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  transition: background 0.2s, transform 0.15s !important;
+}
+.nav-cta:hover { background: var(--orange2) !important; transform: translateY(-1px); }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+
+.mobile-menu {
+  display: none; position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  z-index: 999; padding: 24px;
+  flex-direction: column; gap: 20px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-size: 16px; color: var(--muted); font-weight: 500; }
+.mobile-menu a:hover { color: var(--text); }
+.mobile-menu .nav-cta { display: block; text-align: center; padding: 14px 24px; width: 100%; }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--orange); color: #fff;
+  font-family: var(--ff-body); font-size: 14px; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 14px 28px; border-radius: 4px;
+  border: none; cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.btn-primary:hover { background: var(--orange2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,93,10,0.35); }
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--text);
+  font-family: var(--ff-body); font-size: 14px; font-weight: 500;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 14px 24px; border-radius: 4px;
+  border: 1px solid var(--border2); cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-secondary:hover { border-color: var(--text); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 120px 24px 80px;
+  position: relative; overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(ellipse 70% 60% at 65% 45%, rgba(232,93,10,0.09) 0%, transparent 65%),
+    url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1.1fr 0.9fr;
+  gap: 64px; align-items: center;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(232,93,10,0.1);
+  border: 1px solid rgba(232,93,10,0.28);
+  border-radius: 100px; padding: 6px 14px 6px 8px;
+  font-size: 12px; font-weight: 600; color: var(--orange2);
+  letter-spacing: 0.04em; margin-bottom: 28px; width: fit-content;
+}
+
+.badge-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.55;transform:scale(.8)} }
+
+.hero h1 {
+  font-family: var(--ff-head);
+  font-size: clamp(54px, 7.5vw, 92px);
+  font-weight: 900; line-height: 0.95;
+  letter-spacing: 0.01em; text-transform: uppercase;
+  color: var(--text); margin-bottom: 24px;
+}
+.hero h1 em { font-style: normal; color: var(--orange); display: block; }
+.hero h1 .outline { -webkit-text-stroke: 2px var(--border2); color: transparent; }
+
+.hero-sub {
+  font-size: 17px; color: var(--muted); font-weight: 400;
+  max-width: 460px; line-height: 1.75; margin-bottom: 36px;
+}
+
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 44px; }
+
+.hero-trust {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 12px; color: var(--muted2); font-weight: 500; letter-spacing: 0.04em;
+  flex-wrap: wrap;
+}
+.trust-div { width: 1px; height: 14px; background: var(--border2); }
+
+/* Hero right card */
+.hero-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden;
+}
+
+.hero-card-header {
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.hc-dot { width: 10px; height: 10px; border-radius: 50%; }
+.hero-card-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin-left: 6px;
+}
+
+.scenario-list { display: flex; flex-direction: column; }
+
+.scenario {
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.scenario:last-child { border-bottom: none; }
+.scenario:hover { background: var(--surface2); }
+
+.scenario-before {
+  font-size: 13px; color: #c0392b;
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 10px; line-height: 1.5;
+}
+.scenario-after {
+  font-size: 13px; color: var(--green);
+  display: flex; align-items: flex-start; gap: 10px;
+  line-height: 1.5;
+}
+.scenario-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+.hero-card-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--surface2);
+  display: flex; align-items: center; gap: 10px;
+  font-size: 12px; color: var(--muted);
+}
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green); flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ── LOGOS ── */
+.logos-strip {
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 24px; background: var(--surface);
+}
+.logos-strip-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; gap: 40px;
+  flex-wrap: wrap; justify-content: center;
+}
+.logos-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; }
+.logo-row { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; justify-content: center; }
+.logo-co {
+  font-family: var(--ff-head); font-size: 17px; font-weight: 700;
+  letter-spacing: 0.08em; color: var(--muted2); text-transform: uppercase; white-space: nowrap;
+  transition: color 0.2s;
+}
+.logo-co:hover { color: var(--muted); }
+
+/* ── PROBLEM ── */
+.problem-section { padding: 100px 24px; background: var(--bg); }
+.problem-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
+}
+
+.problem-left h2 {
+  font-family: var(--ff-head);
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 800; line-height: 1;
+  text-transform: uppercase; letter-spacing: 0.02em;
+  color: var(--text); margin-bottom: 20px;
+}
+.problem-left h2 em { font-style: normal; color: var(--orange); }
+.problem-left p { font-size: 16px; color: var(--muted); line-height: 1.75; max-width: 420px; }
+
+.problem-cards { display: flex; flex-direction: column; gap: 4px; }
+
+.problem-card {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 20px; border: 1px solid var(--border);
+  border-radius: 6px; background: var(--surface);
+  transition: border-color 0.2s, background 0.2s;
+}
+.problem-card:hover { border-color: rgba(232,93,10,0.3); background: var(--surface2); }
+
+.prob-icon {
+  width: 38px; height: 38px; border-radius: 4px; flex-shrink: 0;
+  background: rgba(232,93,10,0.08); border: 1px solid rgba(232,93,10,0.18);
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+}
+.prob-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+.prob-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── SOLUTION ── */
+.solution-section {
+  padding: 100px 24px;
+  background: var(--surface);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.solution-inner { max-width: 1100px; margin: 0 auto; }
+
+.solution-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 2px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+}
+
+.sol-card {
+  background: var(--surface2); padding: 40px 36px;
+  position: relative; overflow: hidden;
+  transition: background 0.25s;
+}
+.sol-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--orange), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.sol-card:hover { background: var(--bg); }
+.sol-card:hover::before { opacity: 1; }
+
+.sol-num {
+  font-family: var(--ff-head); font-size: 64px; font-weight: 800;
+  color: var(--border2); line-height: 1; margin-bottom: 16px;
+  letter-spacing: 0.02em; transition: color 0.3s;
+}
+.sol-card:hover .sol-num { color: rgba(232,93,10,0.15); }
+
+.sol-icon { font-size: 28px; margin-bottom: 14px; }
+
+.sol-title {
+  font-family: var(--ff-head); font-size: 24px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--text); margin-bottom: 12px; line-height: 1.1;
+}
+
+.sol-desc { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 20px; }
+
+.sol-bullets { display: flex; flex-direction: column; gap: 9px; }
+.sol-bullet {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--muted);
+}
+.sol-bullet::before { content: '→'; color: var(--orange); font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+
+/* ── HOW IT WORKS ── */
+.how-section { padding: 100px 24px; background: var(--bg); }
+.how-inner { max-width: 1100px; margin: 0 auto; }
+
+.how-steps {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0; margin-top: 56px; position: relative;
+}
+.how-steps::before {
+  content: ''; position: absolute;
+  top: 27px; left: calc(12.5% + 24px); right: calc(12.5% + 24px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border2), var(--border2), transparent);
+}
+
+.how-step { padding: 0 20px; text-align: center; }
+
+.how-circle {
+  width: 54px; height: 54px; border-radius: 50%;
+  background: var(--surface); border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px; position: relative; z-index: 1;
+  transition: border-color 0.3s, background 0.3s;
+}
+.how-step:hover .how-circle { border-color: var(--orange); background: rgba(232,93,10,0.07); }
+
+.how-num {
+  font-family: var(--ff-head); font-size: 20px; font-weight: 800;
+  color: var(--orange); line-height: 1;
+}
+
+.how-title {
+  font-family: var(--ff-head); font-size: 18px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--text); margin-bottom: 10px;
+}
+.how-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+/* ── RESULTS ── */
+.results-section {
+  padding: 100px 24px;
+  background: var(--surface);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.results-inner { max-width: 1100px; margin: 0 auto; }
+
+.results-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: start; margin-top: 56px;
+}
+
+.outcome-list { display: flex; flex-direction: column; gap: 4px; }
+
+.outcome {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 22px 24px; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 6px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.outcome:hover { border-color: rgba(93,187,122,0.3); background: var(--surface2); }
+
+.outcome-icon {
+  width: 38px; height: 38px; border-radius: 4px; flex-shrink: 0;
+  background: rgba(93,187,122,0.08); border: 1px solid rgba(93,187,122,0.18);
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+}
+.outcome-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+.outcome-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* testimonial styles removed - no testimonials on this page */
+
+/* ── PRICING ── */
+.pricing-section { padding: 100px 24px; background: var(--bg); }
+.pricing-inner { max-width: 1100px; margin: 0 auto; }
+
+.pricing-card-single {
+  margin-top: 56px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden;
+}
+
+.pricing-left {
+  padding: 52px 48px;
+  border-right: 1px solid var(--border);
+}
+
+.pricing-left h3 {
+  font-family: var(--ff-head); font-size: 36px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.03em;
+  color: var(--text); margin-bottom: 16px; line-height: 1;
+}
+.pricing-left h3 em { font-style: normal; color: var(--orange); }
+
+.pricing-left p {
+  font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 32px;
+}
+
+.pricing-includes {
+  display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px;
+}
+
+.pi-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 14px; color: var(--muted); line-height: 1.4;
+}
+.pi-check { color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+.pricing-note {
+  font-size: 12px; color: var(--muted2);
+  padding-top: 20px; border-top: 1px solid var(--border);
+  line-height: 1.6;
+}
+
+.pricing-right {
+  padding: 52px 48px;
+  background: var(--surface2);
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+.pricing-right h4 {
+  font-family: var(--ff-head); font-size: 22px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--text); margin-bottom: 14px;
+}
+
+.pricing-right p { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 20px; }
+
+.roi-items { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+
+.roi-item {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 16px 18px;
+}
+.roi-item-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted2); margin-bottom: 5px;
+}
+.roi-item-value { font-size: 14px; color: var(--text); font-weight: 500; line-height: 1.4; }
+
+/* ── FAQ ── */
+.faq-section {
+  padding: 100px 24px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.faq-inner { max-width: 720px; margin: 0 auto; }
+
+.faq-list { margin-top: 48px; }
+.faq-item { border-top: 1px solid var(--border); padding: 24px 0; }
+.faq-item:last-child { border-bottom: 1px solid var(--border); }
+
+.faq-q {
+  font-size: 16px; font-weight: 600; color: var(--text);
+  cursor: pointer; display: flex; justify-content: space-between;
+  align-items: flex-start; gap: 16px; letter-spacing: 0.01em;
+  user-select: none; line-height: 1.45;
+}
+.faq-toggle {
+  font-size: 22px; color: var(--orange); flex-shrink: 0;
+  transition: transform 0.3s; font-weight: 300; margin-top: -2px;
+}
+.faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+.faq-a {
+  font-size: 14px; color: var(--muted); line-height: 1.8;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.35s ease, padding-top 0.3s ease;
+}
+.faq-item.open .faq-a { max-height: 500px; padding-top: 16px; }
+.faq-a strong { color: var(--text); font-weight: 600; }
+
+/* ── CTA ── */
+.cta-section {
+  padding: 100px 24px; background: var(--bg);
+  border-top: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 700px; height: 500px;
+  background: radial-gradient(ellipse, rgba(232,93,10,0.1) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.cta-inner { max-width: 680px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+
+.cta-inner h2 {
+  font-family: var(--ff-head);
+  font-size: clamp(44px, 7vw, 82px); font-weight: 900;
+  text-transform: uppercase; letter-spacing: 0.02em; line-height: 0.95;
+  color: var(--text); margin-bottom: 20px;
+}
+.cta-inner h2 em { font-style: normal; color: var(--orange); }
+.cta-inner > p { font-size: 17px; color: var(--muted); line-height: 1.75; margin-bottom: 40px; }
+
+/* Contact Form */
+.contact-form {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 36px; text-align: left;
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+
+.form-group label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: var(--bg); border: 1px solid var(--border2);
+  border-radius: 4px; padding: 12px 14px;
+  font-family: var(--ff-body); font-size: 14px; color: var(--text);
+  transition: border-color 0.2s; outline: none; width: 100%;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--orange); }
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: var(--muted2); }
+
+.form-group select {
+  cursor: pointer; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238A8780' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px;
+}
+.form-group select option { background: var(--surface); color: var(--text); }
+.form-group textarea { resize: vertical; min-height: 100px; }
+
+.form-submit {
+  margin-top: 20px; width: 100%; padding: 16px 32px;
+  background: var(--orange); color: #fff; border: none; border-radius: 4px;
+  font-family: var(--ff-body); font-size: 14px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.form-submit:hover { background: var(--orange2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,93,10,0.35); }
+
+.form-note { margin-top: 14px; font-size: 12px; color: var(--muted2); text-align: center; }
+
+.form-success { display: none; text-align: center; padding: 48px 24px; }
+.form-success-icon { font-size: 52px; margin-bottom: 16px; }
+.form-success h3 {
+  font-family: var(--ff-head); font-size: 30px; font-weight: 800;
+  text-transform: uppercase; color: var(--text); margin-bottom: 10px;
+}
+.form-success p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--surface); border-top: 1px solid var(--border);
+  padding: 56px 24px 32px;
+}
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 56px; padding-bottom: 44px;
+  border-bottom: 1px solid var(--border); margin-bottom: 28px;
+}
+
+.footer-logo { font-family: var(--ff-head); font-size: 24px; font-weight: 900; letter-spacing: 0.06em; color: var(--text); }
+.footer-logo span { color: var(--orange); }
+.footer-brand p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-top: 12px; max-width: 280px; }
+
+.footer-col h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted2); margin-bottom: 18px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a { font-size: 14px; color: var(--muted); transition: color 0.2s; }
+.footer-col ul li a:hover { color: var(--text); }
+
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.footer-copy { font-size: 12px; color: var(--muted2); }
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a { font-size: 12px; color: var(--muted2); transition: color 0.2s; }
+.footer-legal a:hover { color: var(--muted); }
+
+/* ── ANIMATIONS ── */
+.fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+.hero-content > * { animation: fadeUp 0.7s ease both; }
+.hero-badge    { animation-delay: 0.1s; }
+.hero h1       { animation-delay: 0.2s; }
+.hero-sub      { animation-delay: 0.3s; }
+.hero-actions  { animation-delay: 0.4s; }
+.hero-trust    { animation-delay: 0.5s; }
+.hero-card     { animation: fadeUp 0.7s ease 0.3s both; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .hero-inner        { grid-template-columns: 1fr; gap: 48px; }
+  .hero-card         { display: none; }
+  .problem-inner     { grid-template-columns: 1fr; gap: 48px; }
+  .solution-grid     { grid-template-columns: 1fr; }
+  .how-steps         { grid-template-columns: 1fr 1fr; }
+  .how-steps::before { display: none; }
+  .results-grid      { grid-template-columns: 1fr; gap: 40px; }
+  .pricing-card-single { grid-template-columns: 1fr; }
+  .pricing-left      { border-right: none; border-bottom: 1px solid var(--border); }
+  .footer-top        { grid-template-columns: 1fr 1fr; gap: 36px; }
+  .footer-brand      { grid-column: 1 / -1; }
+  .form-row          { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .nav-links         { display: none; }
+  .hamburger         { display: flex; }
+  .hero              { padding: 100px 20px 60px; }
+  .hero h1           { font-size: 54px; }
+  .hero-actions      { flex-direction: column; }
+  .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+  .how-steps         { grid-template-columns: 1fr; }
+  .footer-top        { grid-template-columns: 1fr; }
+  .section-head      { margin-bottom: 40px; }
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted2); }
+/* Credibility block */
+.credibility-block { background: var(--surface2); border: 1px solid var(--border2); border-left: 3px solid var(--orange); border-radius: 6px; padding: 28px 32px; }
+.cred-inner { display: flex; align-items: flex-start; gap: 20px; }
+.cred-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+.cred-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.cred-desc { font-size: 14px; color: var(--muted); line-height: 1.75; }
+.cred-desc strong { color: var(--text); font-weight: 600; }
+@media (max-width: 700px) { .cred-inner { flex-direction: column; gap: 12px; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Bid<span>Route</span></div>
+  <ul class="nav-links">
+    <li><a href="#solution">What We Build</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Free Call</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#solution" onclick="toggleMenu()">What We Build</a>
+  <a href="#how" onclick="toggleMenu()">How It Works</a>
+  <a href="#pricing" onclick="toggleMenu()">Pricing</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="#contact" class="nav-cta" onclick="toggleMenu()">Get a Free Call</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="badge-dot"></div>
+        Done-for-you automation for construction
+      </div>
+      <h1>Stop Losing<br><em>Jobs</em> to Slow<br><span class="outline">Response</span></h1>
+      <p class="hero-sub">Most contractors lose work not because of their price — but because someone else responded first. Bid Route builds the systems that keep that from happening while you're out on the job.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Get a Free Strategy Call →</a>
+        <a href="#solution" class="btn-secondary">See What We Build</a>
+      </div>
+      <div class="hero-trust">
+        <span>Custom-built for your business</span>
+        <span class="trust-div"></span>
+        <span>No software to learn</span>
+        <span class="trust-div"></span>
+        <span>We handle the setup</span>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-card-header">
+        <div class="hc-dot" style="background:#E85D0A"></div>
+        <div class="hc-dot" style="background:#F5C842"></div>
+        <div class="hc-dot" style="background:#5DBB7A"></div>
+        <span class="hero-card-label">Before & After Bid Route</span>
+      </div>
+      <div class="scenario-list">
+        <div class="scenario">
+          <div class="scenario-before">
+            <span class="scenario-icon">✗</span>
+            Lead fills out your form on a Saturday. You see it Monday morning. They already hired someone else.
+          </div>
+          <div class="scenario-after">
+            <span class="scenario-icon">✓</span>
+            Lead fills out your form. They get a text back in under a minute. You're already in the conversation.
+          </div>
+        </div>
+        <div class="scenario">
+          <div class="scenario-before">
+            <span class="scenario-icon">✗</span>
+            You called a lead twice. No answer. You moved on. Months later you find out they hired someone else for a job that was right in your wheelhouse.
+          </div>
+          <div class="scenario-after">
+            <span class="scenario-icon">✓</span>
+            Leads that don't respond get automatic follow-up over two weeks. You close jobs you would have forgotten about.
+          </div>
+        </div>
+        <div class="scenario">
+          <div class="scenario-before">
+            <span class="scenario-icon">✗</span>
+            Your quote process takes 45 minutes per job. You put it off. Leads go cold while you wait.
+          </div>
+          <div class="scenario-after">
+            <span class="scenario-icon">✓</span>
+            Quotes go out automatically based on what the customer fills in. Fast, professional, branded to you.
+          </div>
+        </div>
+      </div>
+      <div class="hero-card-footer">
+        <div class="live-dot"></div>
+        Common situations in concrete contracting
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POSITIONING STRIP -->
+<section class="logos-strip">
+  <div class="logos-strip-inner" style="flex-direction:column; gap:14px; text-align:center;">
+    <span class="logos-label">Built for concrete companies that rely on fast response, organized follow-up, and consistent lead handling</span>
+    <div class="logo-row">
+      <span class="logo-co" style="font-size:13px; font-weight:500; font-family:var(--ff-body); text-transform:none; letter-spacing:0.01em; color:var(--muted2);">Flatwork &nbsp;·&nbsp; Foundations &nbsp;·&nbsp; Stamped Concrete &nbsp;·&nbsp; Concrete Repair &nbsp;·&nbsp; Commercial Pours</span>
+    </div>
+  </div>
+</section>
+
+<!-- AMERICAN CONCRETE CREDIBILITY - high visibility, above the fold content -->
+<section style="padding: 0 24px; background: var(--bg);">
+  <div style="max-width:1100px; margin:0 auto; padding: 40px 0; border-bottom: 1px solid var(--border);">
+    <div class="credibility-block" style="margin:0;">
+      <div class="cred-inner">
+        <div class="cred-icon">🏗</div>
+        <div class="cred-text">
+          <div class="cred-title">Built Around Real Contractor Workflows</div>
+          <div class="cred-desc">Bid Route is being developed through direct work with concrete contractors — including ongoing collaboration with <strong>American Concrete</strong>. The systems we build come from understanding how actual construction businesses operate day to day, not assumptions made from a desk.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem-section">
+  <div class="problem-inner">
+    <div class="problem-left">
+      <div class="tag">The Real Problem</div>
+      <h2>Good Work<br>Isn't<br><em>Enough.</em></h2>
+      <p>The contractors winning the most jobs right now aren't always the best at the craft. They're the ones who respond fast, follow up consistently, and look organized from the first contact. That's what we fix.</p>
+    </div>
+    <div class="problem-cards">
+      <div class="problem-card fade-up">
+        <div class="prob-icon">📵</div>
+        <div>
+          <div class="prob-title">Missed Calls Go Nowhere</div>
+          <div class="prob-desc">A lead calls, you're on a job, you miss it. You mean to call back. You forget. That job just went to someone else.</div>
+        </div>
+      </div>
+      <div class="problem-card fade-up">
+        <div class="prob-icon">🐢</div>
+        <div>
+          <div class="prob-title">Slow Response Loses the Job</div>
+          <div class="prob-desc">Contractors who respond quickly tend to win the work. If a lead fills out a form and doesn't hear back for a day, they've already called someone else.</div>
+        </div>
+      </div>
+      <div class="problem-card fade-up">
+        <div class="prob-icon">📋</div>
+        <div>
+          <div class="prob-title">Leads Scattered Everywhere</div>
+          <div class="prob-desc">Texts, calls, Facebook messages, website forms. No system. You're trying to remember who needs a follow-up from memory.</div>
+        </div>
+      </div>
+      <div class="problem-card fade-up">
+        <div class="prob-icon">💨</div>
+        <div>
+          <div class="prob-title">Follow-Up Falls Through</div>
+          <div class="prob-desc">You call once. No answer. You move on. But a lot of those leads were still interested — they just weren't ready yet. Without a system, those jobs disappear.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution-section" id="solution">
+  <div class="solution-inner">
+    <div class="section-head">
+      <div class="tag">What Changes in Your Business</div>
+      <h2>Less Chasing.<br><em>More Closing.</em></h2>
+      <p>We build the systems. You stay on the tools. Here's what looks different once everything is running.</p>
+    </div>
+    <div class="solution-grid">
+      <div class="sol-card fade-up">
+        <div class="sol-num">01</div>
+        <div class="sol-icon">⚡</div>
+        <div class="sol-title">You're Always First to Respond</div>
+        <div class="sol-desc">Right now, if a lead comes in while you're on a job, they might wait hours — or until Monday. With Bid Route, they hear back within minutes. Every time. That puts you in the conversation before your competition even knows the lead exists.</div>
+        <ul class="sol-bullets">
+          <li class="sol-bullet">Works on weekends, evenings, and holidays</li>
+          <li class="sol-bullet">Reaches out across website forms, Facebook, and Google</li>
+          <li class="sol-bullet">Messages are written to sound like you, not a bot</li>
+        </ul>
+      </div>
+      <div class="sol-card fade-up">
+        <div class="sol-num">02</div>
+        <div class="sol-icon">📬</div>
+        <div class="sol-title">Leads Don't Go Cold on Their Own</div>
+        <div class="sol-desc">When someone doesn't respond right away, that doesn't mean they're not interested. The system follows up for you — on a schedule, over time — so you're not the one having to remember to check in every few days. Leads stay warm without you lifting a finger.</div>
+        <ul class="sol-bullets">
+          <li class="sol-bullet">Follow-up runs automatically until they respond or opt out</li>
+          <li class="sol-bullet">Text and email — whichever fits the situation</li>
+          <li class="sol-bullet">Spaced out so it doesn't feel aggressive</li>
+        </ul>
+      </div>
+      <div class="sol-card fade-up">
+        <div class="sol-num">03</div>
+        <div class="sol-icon">🗂</div>
+        <div class="sol-title">You Know Where Every Job Stands</div>
+        <div class="sol-desc">No more trying to remember who called last Tuesday or whether you sent that quote. Every lead is organized, tracked, and visible in one place. You open it up and you can see exactly what needs attention — without digging through texts and voicemails.</div>
+        <ul class="sol-bullets">
+          <li class="sol-bullet">All leads in one organized view</li>
+          <li class="sol-bullet">Status updates automatically as things move forward</li>
+          <li class="sol-bullet">Nothing slips because you forgot about it</li>
+        </ul>
+      </div>
+      <div class="sol-card fade-up">
+        <div class="sol-num">04</div>
+        <div class="sol-icon">📄</div>
+        <div class="sol-title">Quotes Go Out Fast, Not When You Get Around to It</div>
+        <div class="sol-desc">Writing quotes by hand takes time you don't always have. A slow quote means a cold lead. We set up a process that gets estimates out the door faster — professional, branded, and easy for the customer to say yes to — so you're not losing jobs in the gap between interest and paperwork.</div>
+        <ul class="sol-bullets">
+          <li class="sol-bullet">Templates built around your actual job types</li>
+          <li class="sol-bullet">Formatted and branded to your company</li>
+          <li class="sol-bullet">Easy for customers to review and approve</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="how-inner">
+    <div class="section-head">
+      <div class="tag">How It Works</div>
+      <h2>We Build It.<br><em>You Run Jobs.</em></h2>
+      <p>You don't need to know anything about software or automation. We handle the entire build and setup. All you do is show up to the first call and answer questions about your business.</p>
+    </div>
+    <div class="how-steps">
+      <div class="how-step fade-up">
+        <div class="how-circle"><div class="how-num">01</div></div>
+        <div class="how-title">Free Strategy Call</div>
+        <div class="how-desc">We learn your business — how you get leads, how you follow up, where jobs are slipping through. No pitch, just an honest conversation.</div>
+      </div>
+      <div class="how-step fade-up">
+        <div class="how-circle"><div class="how-num">02</div></div>
+        <div class="how-title">We Build Your System</div>
+        <div class="how-desc">Our team builds everything custom for your business. Typically ready within about a week. You don't touch anything technical.</div>
+      </div>
+      <div class="how-step fade-up">
+        <div class="how-circle"><div class="how-num">03</div></div>
+        <div class="how-title">We Test Everything</div>
+        <div class="how-desc">Before we hand it over, we run test leads through the whole system to make sure every response, follow-up, and notification fires correctly.</div>
+      </div>
+      <div class="how-step fade-up">
+        <div class="how-circle"><div class="how-num">04</div></div>
+        <div class="how-title">Go Live & Keep Running</div>
+        <div class="how-desc">Your system goes live and we stay on. If something needs adjusting or breaks, we fix it. You're not managing this yourself.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results-section" id="results">
+  <div class="results-inner">
+    <div class="section-head">
+      <div class="tag">What the System Helps With</div>
+      <h2>What Gets<br><em>Better</em> When<br>It's Running.</h2>
+      <p>No inflated claims. Here's what Bid Route is built to improve — based on the problems concrete contractors actually deal with.</p>
+    </div>
+
+    <div class="outcome-list" style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-bottom:48px;">
+      <div class="outcome fade-up">
+        <div class="outcome-icon">⚡</div>
+        <div>
+          <div class="outcome-title">Faster Lead Response</div>
+          <div class="outcome-desc">The system is built to respond to new leads immediately — day or night — so you're not losing jobs just because you were busy when someone reached out.</div>
+        </div>
+      </div>
+      <div class="outcome fade-up">
+        <div class="outcome-icon">📬</div>
+        <div>
+          <div class="outcome-title">Fewer Missed Follow-Ups</div>
+          <div class="outcome-desc">Instead of relying on memory to follow up, the system does it automatically on a schedule — so leads don't go cold just because you got busy.</div>
+        </div>
+      </div>
+      <div class="outcome fade-up">
+        <div class="outcome-icon">📊</div>
+        <div>
+          <div class="outcome-title">Cleaner Lead Organization</div>
+          <div class="outcome-desc">Every lead in one place, with a clear status. No more scattered texts and notes. You can see at a glance who needs attention and who's already been handled.</div>
+        </div>
+      </div>
+      <div class="outcome fade-up">
+        <div class="outcome-icon">🕐</div>
+        <div>
+          <div class="outcome-title">Less Time on Admin Tasks</div>
+          <div class="outcome-desc">Quoting, follow-up messages, and scheduling confirmations that currently eat your time are handled by the system — so you spend less time at a desk.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="section-head">
+      <div class="tag">Pricing</div>
+      <h2>Priced for<br>Your <em>Business.</em></h2>
+      <p>We don't charge the same rate for a one-man operation as we do for a company running six crews. Pricing is based on what you actually need — nothing more.</p>
+    </div>
+    <div class="pricing-card-single">
+      <div class="pricing-left">
+        <h3>Custom Pricing.<br><em>No Packages.</em></h3>
+        <p>After your free strategy call, we'll put together a proposal based on your business size, how many leads you're getting, and what systems make sense for you. You'll know the exact cost before anything is built.</p>
+        <div class="pricing-includes">
+          <div class="pi-row"><span class="pi-check">✓</span> Everything is custom-built for your business</div>
+          <div class="pi-row"><span class="pi-check">✓</span> Full setup handled by our team</div>
+          <div class="pi-row"><span class="pi-check">✓</span> Ongoing maintenance and support included</div>
+          <div class="pi-row"><span class="pi-check">✓</span> Adjustments made as your business grows</div>
+          <div class="pi-row"><span class="pi-check">✓</span> No contracts — month to month</div>
+          <div class="pi-row"><span class="pi-check">✓</span> No setup fees hidden in the fine print</div>
+        </div>
+        <div class="pricing-note">We'll give you a clear number before anything is built. No hidden fees, no long-term contracts. If it's not the right fit for your business, we'll tell you that on the call.</div>
+      </div>
+      <div class="pricing-right">
+        <h4>How Pricing Works</h4>
+        <p>Pricing depends on the systems your business needs, the amount of setup required, and how much ongoing support you want. We'll give you a clear number after your free call — before anything is built.</p>
+        <div class="roi-items">
+          <div class="roi-item">
+            <div class="roi-item-label">What's included</div>
+            <div class="roi-item-value">Custom build, full setup, and ongoing maintenance — not a tool you pay for and manage yourself</div>
+          </div>
+          <div class="roi-item">
+            <div class="roi-item-label">How to think about the cost</div>
+            <div class="roi-item-value">Whether it pays for itself depends on your lead volume and your business. We'll talk through that honestly on the call — we're not going to make promises we can't back up.</div>
+          </div>
+          <div class="roi-item">
+            <div class="roi-item-label">No surprises</div>
+            <div class="roi-item-value">You'll know the exact cost before we build anything. Month-to-month, no contracts.</div>
+          </div>
+        </div>
+        <a href="#contact" class="btn-primary" style="width:100%; justify-content:center;">Talk Through Pricing →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="faq-inner">
+    <div class="section-head">
+      <div class="tag">FAQ</div>
+      <h2>Questions We<br><em>Always Get.</em></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">I'm not a tech person at all. Can I actually use this? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">Yes — and that's exactly who we build this for. <strong>You don't use any software or log into any dashboard unless you want to.</strong> We build the system, we manage the system, and we fix it when something needs adjusting. Your only job is running your business. If you can send a text, you have all the technical ability this requires.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How long does it take to get set up? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">After your strategy call, we typically have your system built and live <strong>within about a week.</strong> It depends on the complexity of what we're building for your business, but we don't drag it out. We know you're losing leads while you're waiting, so we move fast.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Is this going to replace my office person or my crew? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">No. <strong>This handles the repetitive stuff</strong> — sending a first response, following up, organizing your leads — not the relationship-building or the actual work. If you have an office person, this makes them more effective by handling the tasks that eat their time. If it's just you, it makes you feel like you have a support system behind you.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How much does it cost? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">We build a custom proposal after your free call, based on your business size and what you need. <strong>We don't have a one-size-fits-all price</strong> because a solo operator and a company with 10 crews need very different systems. We'll be upfront with you on cost before anything is built — no surprises.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What if it breaks or stops working? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">We monitor your system and fix issues as part of the service. <strong>You're not on your own</strong> trying to figure out why something stopped working. If you notice something off, you contact us and we fix it — usually the same day. This isn't a product you buy and then manage yourself. We stay involved.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How fast will I see results? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">The instant response system is designed to work from day one — the moment a lead comes in, they hear back automatically. <strong>How quickly that translates into closed jobs depends on your business and your lead volume.</strong> The follow-up and quoting systems build their impact over time as leads move through the pipeline. We'll set realistic expectations on your strategy call based on what you're actually working with.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Will the automated messages sound weird or robotic to my customers? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">We write the messages to sound like you — direct, friendly, professional. <strong>Your customers won't know it's automated.</strong> We'll show you every message before it goes live so you can read through it and tell us if it doesn't sound right. We adjust until it does.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Do I have to sign a long-term contract? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">No. <strong>We're month to month.</strong> We don't lock you in because we don't think we should need to. If the system is working and saving you time and closing more jobs, you'll want to keep it. If for some reason it's not working for you, you can walk away. We'd rather earn your business every month than trap you into it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner">
+    <div class="tag" style="justify-content:center">Let's Talk</div>
+    <h2>Stop Leaving<br><em>Jobs</em> on the<br>Table.</h2>
+    <p>Book a free 30-minute call. We'll look at how you're currently getting and handling leads, show you exactly what we'd build for your business, and tell you what it costs. No pressure, no pitch deck.</p>
+
+    <div class="contact-form">
+      <div id="formContent">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="Your first name" required>
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="Your last name" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Your email address" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="Your phone number">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="company">Company Name</label>
+            <input type="text" id="company" placeholder="Your company name">
+          </div>
+          <div class="form-group">
+            <label for="crew">How many people on your crew?</label>
+            <select id="crew">
+              <option value="" disabled selected>Select size</option>
+              <option>Just me</option>
+              <option>2–4 people</option>
+              <option>5–10 people</option>
+              <option>11–20 people</option>
+              <option>20+ people</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label for="problem">Where are you losing the most jobs right now?</label>
+          <textarea id="problem" placeholder="e.g. I miss calls when I'm on the job, leads go cold because I don't have time to follow up..."></textarea>
+        </div>
+        <button type="button" class="form-submit" onclick="submitForm()">Book My Free Call →</button>
+        <p class="form-note">We'll reach out within one business day to schedule your call.</p>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">✅</div>
+        <h3>You're all set.</h3>
+        <p>We'll reach out within one business day to schedule your free strategy call. Check your email for a confirmation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">Bid<span>Route</span></div>
+        <p>Custom automation systems for concrete and construction companies. Done-for-you setup, ongoing support, no tech knowledge needed.</p>
+        <div style="margin-top:20px; display:flex; flex-direction:column; gap:8px;">
+          <a href="tel:6513982305" style="font-size:14px; color:var(--muted); transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">📞 651-398-2305</a>
+          <a href="mailto:lpmbusiness@gmail.com" style="font-size:14px; color:var(--muted); transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">✉ lpmbusiness@gmail.com</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#solution">What We Build</a></li>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#contact">Get in Touch</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Bid Route. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-service.html">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('mobileMenu');
+  const ham = document.querySelector('.hamburger');
+  if (menu.classList.contains('open') && !menu.contains(e.target) && !ham.contains(e.target)) {
+    menu.classList.remove('open');
+  }
+});
+
+function toggleFaq(el) {
+  const item = el.parentElement;
+  document.querySelectorAll('.faq-item').forEach(i => { if (i !== item) i.classList.remove('open'); });
+  item.classList.toggle('open');
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), (parseFloat(entry.target.dataset.delay) || 0) * 1000);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach((el, i) => {
+  const siblings = Array.from(el.parentElement.children).filter(c => c.classList.contains('fade-up'));
+  el.dataset.delay = siblings.indexOf(el) * 0.1;
+  observer.observe(el);
+});
+
+async function submitForm() {
+  const fname = document.getElementById('fname').value.trim();
+  const lname = document.getElementById('lname').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const company = document.getElementById('company').value.trim();
+  const crew = document.getElementById('crew').value;
+  const problem = document.getElementById('problem').value.trim();
+
+  if (!fname || !email) {
+    alert('Please fill in your name and email to book your call.');
+    return;
+  }
+
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('https://formspree.io/f/xlgakylb', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        'First Name': fname,
+        'Last Name': lname,
+        'Email': email,
+        'Phone': phone,
+        'Company': company,
+        'Crew Size': crew,
+        'Biggest Challenge': problem
+      })
+    });
+
+    if (res.ok) {
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else {
+      const data = await res.json();
+      if (data.errors) {
+        alert('Something went wrong: ' + data.errors.map(e => e.message).join(', '));
+      } else {
+        alert('Something went wrong. Please try again or email us directly.');
+      }
+      btn.textContent = 'Book My Free Call →';
+      btn.disabled = false;
+    }
+  } catch (err) {
+    alert('Could not send — check your connection and try again.');
+    btn.textContent = 'Book My Free Call →';
+    btn.disabled = false;
+  }
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
