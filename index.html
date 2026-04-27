@@ -30,7 +30,7 @@
   --ff-body:  'Barlow', sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background: var(--bg);
@@ -212,9 +212,9 @@ nav {
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 44px; }
 
 .hero-trust {
-  display: flex; align-items: center; gap: 14px;
+  display: flex; align-items: center; gap: 10px;
   font-size: 12px; color: var(--muted2); font-weight: 500; letter-spacing: 0.04em;
-  flex-wrap: wrap;
+  flex-wrap: wrap; justify-content: flex-start;
 }
 .trust-div { width: 1px; height: 14px; background: var(--border2); }
 
@@ -275,21 +275,18 @@ nav {
 /* ── LOGOS ── */
 .logos-strip {
   border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-  padding: 24px; background: var(--surface);
+  padding: 20px 24px; background: var(--surface); overflow: hidden;
 }
 .logos-strip-inner {
   max-width: 1100px; margin: 0 auto;
-  display: flex; align-items: center; gap: 40px;
-  flex-wrap: wrap; justify-content: center;
+  display: flex; align-items: center; justify-content: center;
 }
-.logos-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; }
-.logo-row { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; justify-content: center; }
-.logo-co {
-  font-family: var(--ff-head); font-size: 17px; font-weight: 700;
-  letter-spacing: 0.08em; color: var(--muted2); text-transform: uppercase; white-space: nowrap;
-  transition: color 0.2s;
+.logos-label {
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 0; text-transform: none;
+  color: var(--muted2); text-align: center;
+  line-height: 1.6; word-wrap: break-word;
 }
-.logo-co:hover { color: var(--muted); }
 
 /* ── PROBLEM ── */
 .problem-section { padding: 100px 24px; background: var(--bg); }
@@ -685,24 +682,99 @@ footer {
   .footer-top        { grid-template-columns: 1fr 1fr; gap: 36px; }
   .footer-brand      { grid-column: 1 / -1; }
   .form-row          { grid-template-columns: 1fr; }
+  /* Outcome grid - 2 col on tablet */
+  .results-section .outcome-list { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 600px) {
   .nav-links         { display: none; }
   .hamburger         { display: flex; }
-  .hero              { padding: 100px 20px 60px; }
-  .hero h1           { font-size: 54px; }
+
+  /* Hero */
+  .hero              { padding: 100px 16px 60px; }
+  .hero h1           { font-size: 48px; }
+  .hero-sub          { font-size: 15px; }
   .hero-actions      { flex-direction: column; }
   .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
-  .how-steps         { grid-template-columns: 1fr; }
-  .footer-top        { grid-template-columns: 1fr; }
-  .section-head      { margin-bottom: 40px; }
+  .hero-trust        { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .trust-div         { display: none; }
+
+  /* Sections */
+  .problem-section,
+  .solution-section,
+  .how-section,
+  .results-section,
+  .pricing-section,
+  .faq-section,
+  .cta-section       { padding: 64px 16px; }
+
+  /* Section heads */
+  .section-head      { margin-bottom: 32px; }
+  .section-head h2   { font-size: 36px; }
+  .section-head p    { font-size: 15px; }
+
+  /* Problem */
+  .problem-left h2   { font-size: 40px; }
+  .problem-left p    { font-size: 15px; }
+  .prob-title        { font-size: 14px; }
+  .prob-desc         { font-size: 13px; }
+
+  /* Solution cards */
+  .sol-card          { padding: 28px 20px; }
+  .sol-title         { font-size: 20px; }
+  .sol-desc          { font-size: 14px; }
+
+  /* How it works */
+  .how-steps         { grid-template-columns: 1fr; gap: 32px; }
+  .how-step          { padding: 0; }
+
+  /* Results - stack to single column on mobile */
+  .results-section .outcome-list {
+    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .outcome           { padding: 18px 16px; }
+  .outcome-title     { font-size: 14px; }
+  .outcome-desc      { font-size: 13px; }
+
+  /* Credibility block */
+  .credibility-block { padding: 20px 16px; }
+  .cred-inner        { flex-direction: column; gap: 12px; }
+  .cred-title        { font-size: 14px; }
+  .cred-desc         { font-size: 13px; }
+
+  /* Pricing */
+  .pricing-left      { padding: 28px 20px; }
+  .pricing-right     { padding: 28px 20px; }
+  .pricing-left h3   { font-size: 28px; }
+
+  /* FAQ */
+  .faq-inner         { padding: 0; }
+  .faq-q             { font-size: 14px; }
+  .faq-a             { font-size: 13px; }
+
+  /* CTA */
+  .cta-inner h2      { font-size: 40px; }
+  .cta-inner > p     { font-size: 15px; }
+  .contact-form      { padding: 24px 16px; }
+
+  /* Footer */
+  .footer-top        { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom     { flex-direction: column; align-items: flex-start; gap: 12px; }
+
+  /* Logos strip */
+  .logos-strip-inner { padding: 0 4px; }
+  .logos-label       { font-size: 10px; text-align: center; }
 }
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--muted2); }
+/* Results outcome grid */
+.results-outcome-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+
 /* Credibility block */
 .credibility-block { background: var(--surface2); border: 1px solid var(--border2); border-left: 3px solid var(--orange); border-radius: 6px; padding: 28px 32px; }
 .cred-inner { display: flex; align-items: flex-start; gap: 20px; }
@@ -810,11 +882,8 @@ footer {
 
 <!-- POSITIONING STRIP -->
 <section class="logos-strip">
-  <div class="logos-strip-inner" style="flex-direction:column; gap:14px; text-align:center;">
-    <span class="logos-label">Built for concrete companies that rely on fast response, organized follow-up, and consistent lead handling</span>
-    <div class="logo-row">
-      <span class="logo-co" style="font-size:13px; font-weight:500; font-family:var(--ff-body); text-transform:none; letter-spacing:0.01em; color:var(--muted2);">Flatwork &nbsp;·&nbsp; Foundations &nbsp;·&nbsp; Stamped Concrete &nbsp;·&nbsp; Concrete Repair &nbsp;·&nbsp; Commercial Pours</span>
-    </div>
+  <div class="logos-strip-inner">
+    <span class="logos-label">Built for concrete companies — flatwork, foundations, stamped concrete, repair, and commercial pours</span>
   </div>
 </section>
 
@@ -973,7 +1042,7 @@ footer {
       <p>No inflated claims. Here's what Bid Route is built to improve — based on the problems concrete contractors actually deal with.</p>
     </div>
 
-    <div class="outcome-list" style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-bottom:48px;">
+    <div class="outcome-list results-outcome-grid" style="margin-bottom:48px;">
       <div class="outcome fade-up">
         <div class="outcome-icon">⚡</div>
         <div>
