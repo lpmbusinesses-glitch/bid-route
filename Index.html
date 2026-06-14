@@ -186,7 +186,7 @@ nav {
   color: var(--text); margin-bottom: 24px;
 }
 .hero h1 em { font-style: normal; color: var(--orange); display: block; }
-.hero h1 .outline { -webkit-text-stroke: 2px var(--border2); color: transparent; }
+.hero h1 .outline { color: var(--orange); -webkit-text-stroke: 0; }
 
 .hero-sub {
   font-size: 17px; color: var(--muted); font-weight: 400;
@@ -551,6 +551,33 @@ nav {
 .cta-inner > p { font-size: 17px; color: var(--muted); line-height: 1.75; margin-bottom: 40px; }
 
 /* Contact Form */
+/* Booking box */
+.booking-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 44px 40px; text-align: center;
+}
+.booking-points {
+  display: flex; flex-direction: column; gap: 12px;
+  margin-bottom: 32px; align-items: center;
+}
+.booking-point {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 15px; color: var(--muted);
+}
+.bp-check { color: var(--orange); font-weight: 700; font-size: 16px; }
+.booking-btn {
+  display: inline-block;
+  background: var(--orange); color: #fff;
+  font-family: var(--ff-head); font-size: 18px; font-weight: 700;
+  letter-spacing: 0.02em; padding: 18px 44px; border-radius: 6px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.booking-btn:hover {
+  background: var(--orange2); transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(92,143,74,0.4);
+}
+.booking-note { margin-top: 18px; font-size: 13px; color: var(--muted2); }
+
 .contact-form {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 8px; padding: 36px; text-align: left;
@@ -736,6 +763,9 @@ footer {
   .cta-inner h2      { font-size: 40px; }
   .cta-inner > p     { font-size: 15px; }
   .contact-form      { padding: 24px 16px; }
+  .booking-box       { padding: 28px 20px; }
+  .booking-btn       { width: 100%; padding: 16px 24px; font-size: 16px; }
+  .booking-point     { font-size: 14px; }
 
   /* Footer */
   .footer-top        { grid-template-columns: 1fr; gap: 32px; }
@@ -760,6 +790,50 @@ footer {
 .cred-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
 .cred-desc { font-size: 14px; color: var(--muted); line-height: 1.75; }
 .cred-desc strong { color: var(--text); font-weight: 600; }
+
+/* Standout credibility feature */
+.cred-feature {
+  display: grid; grid-template-columns: 200px 1fr; gap: 48px;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(92,143,74,0.1) 0%, rgba(92,143,74,0.03) 100%);
+  border: 1px solid rgba(92,143,74,0.3);
+  border-radius: 10px; padding: 48px;
+  position: relative; overflow: hidden;
+}
+.cred-feature::before {
+  content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
+  background: var(--orange);
+}
+.cred-feature-left { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+.cred-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--orange); color: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 8px 16px; border-radius: 100px;
+}
+.cred-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: pulse 2s ease-in-out infinite; }
+.cred-feature-icon {
+  font-size: 72px; line-height: 1;
+}
+.cred-feature-title {
+  font-family: var(--ff-head); font-size: 32px; font-weight: 800;
+  color: var(--text); line-height: 1.1; margin-bottom: 16px; letter-spacing: -0.01em;
+}
+.cred-feature-desc { font-size: 16px; color: var(--muted); line-height: 1.75; margin-bottom: 20px; }
+.cred-feature-desc strong { color: var(--orange2); font-weight: 700; }
+.cred-feature-tag {
+  display: inline-block; font-size: 13px; font-weight: 600;
+  color: var(--text); padding: 10px 18px;
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: 6px;
+}
+@media (max-width: 700px) {
+  .cred-feature { grid-template-columns: 1fr; gap: 28px; padding: 28px 20px; text-align: left; }
+  .cred-feature-left { flex-direction: row; align-items: center; gap: 16px; }
+  .cred-feature-icon { font-size: 48px; }
+  .cred-feature-title { font-size: 24px; }
+  .cred-feature-desc { font-size: 15px; }
+}
 @media (max-width: 700px) { .cred-inner { flex-direction: column; gap: 12px; } }
 </style>
 </head>
@@ -767,13 +841,13 @@ footer {
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">Bid<span>Route</span></div>
+  <a href="#top" class="nav-logo" style="cursor:pointer;">Bid<span>Route</span></a>
   <ul class="nav-links">
     <li><a href="#solution">What We Build</a></li>
     <li><a href="#how">How It Works</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="#contact" class="nav-cta">Get a Free Call</a></li>
+    <li><a href="https://calendly.com/lpmbusinesses/30min" target="_blank" rel="noopener" class="nav-cta">Book a Free Call</a></li>
   </ul>
   <div class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
     <span></span><span></span><span></span>
@@ -785,11 +859,11 @@ footer {
   <a href="#how" onclick="toggleMenu()">How It Works</a>
   <a href="#pricing" onclick="toggleMenu()">Pricing</a>
   <a href="#faq" onclick="toggleMenu()">FAQ</a>
-  <a href="#contact" class="nav-cta" onclick="toggleMenu()">Get a Free Call</a>
+  <a href="https://calendly.com/lpmbusinesses/30min" target="_blank" rel="noopener" class="nav-cta">Book a Free Call</a>
 </div>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="top">
   <div class="hero-inner">
     <div class="hero-content">
       <div class="hero-badge">
@@ -799,7 +873,7 @@ footer {
       <h1>Stop Losing<br><em>Jobs</em> to Slow<br><span class="outline">Response</span></h1>
       <p class="hero-sub">Most contractors lose work not because of their price — but because someone else responded first. Bid Route builds the systems that keep that from happening while you're out on the job.</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn-primary">Get a Free Strategy Call →</a>
+        <a href="https://calendly.com/lpmbusinesses/30min" target="_blank" rel="noopener" class="btn-primary">Get a Free Strategy Call →</a>
         <a href="#solution" class="btn-secondary">See What We Build</a>
       </div>
       <div class="hero-trust">
@@ -865,16 +939,21 @@ footer {
   </div>
 </section>
 
-<!-- AMERICAN CONCRETE CREDIBILITY - high visibility, above the fold content -->
-<section style="padding: 0 24px; background: var(--bg);">
-  <div style="max-width:1100px; margin:0 auto; padding: 40px 0; border-bottom: 1px solid var(--border);">
-    <div class="credibility-block" style="margin:0;">
-      <div class="cred-inner">
-        <div class="cred-icon">🏗</div>
-        <div class="cred-text">
-          <div class="cred-title">Built Around Real Contractor Workflows</div>
-          <div class="cred-desc">Bid Route is being developed through direct work with concrete contractors — including ongoing collaboration with <strong>American Concrete</strong>. The systems we build come from understanding how actual construction businesses operate day to day, not assumptions made from a desk.</div>
+<!-- AMERICAN CONCRETE CREDIBILITY - high visibility proof -->
+<section style="padding: 56px 24px; background: var(--surface);">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="cred-feature">
+      <div class="cred-feature-left">
+        <div class="cred-badge">
+          <span class="cred-badge-dot"></span>
+          Real Proof
         </div>
+        <div class="cred-feature-icon">🏗</div>
+      </div>
+      <div class="cred-feature-right">
+        <h2 class="cred-feature-title">Built With Real Contractors — Not From a Desk</h2>
+        <p class="cred-feature-desc">Bid Route is being developed through direct, hands-on work with concrete contractors — including ongoing collaboration with <strong>American Concrete</strong>. Every system we build comes from understanding how a real construction business actually runs day to day.</p>
+        <div class="cred-feature-tag">This is what makes Bid Route different from generic software.</div>
       </div>
     </div>
   </div>
@@ -917,6 +996,25 @@ footer {
           <div class="prob-desc">You call once. No answer. You move on. But a lot of those leads were still interested — they just weren't ready yet. Without a system, those jobs disappear.</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / BOOKING -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner">
+    <div class="tag" style="justify-content:center">Let's Talk</div>
+    <h2>Stop Leaving<br><em>Jobs</em> on the<br>Table.</h2>
+    <p>Book a free 30-minute call. We'll look at how you're currently getting and handling leads. From there, we'll schedule a second quick meeting to show you exactly what we'd build for your business, how it helps, and what it costs. No pressure, no pitch deck.</p>
+
+    <div class="booking-box">
+      <div class="booking-points">
+        <div class="booking-point"><span class="bp-check">✓</span> 30 minutes, straight to the point</div>
+        <div class="booking-point"><span class="bp-check">✓</span> See exactly what we'd build for you</div>
+        <div class="booking-point"><span class="bp-check">✓</span> Get a real price — no obligation</div>
+      </div>
+      <a href="https://calendly.com/lpmbusinesses/30min" target="_blank" rel="noopener" class="booking-btn">Book Your Free Call →</a>
+      <p class="booking-note">Pick a time that works for you. Takes 30 seconds to book.</p>
     </div>
   </div>
 </section>
@@ -1143,68 +1241,6 @@ footer {
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section" id="contact">
-  <div class="cta-inner">
-    <div class="tag" style="justify-content:center">Let's Talk</div>
-    <h2>Stop Leaving<br><em>Jobs</em> on the<br>Table.</h2>
-    <p>Book a free 30-minute call. We'll look at how you're currently getting and handling leads, show you exactly what we'd build for your business, and tell you what it costs. No pressure, no pitch deck.</p>
-
-    <div class="contact-form">
-      <div id="formContent">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="fname">First Name</label>
-            <input type="text" id="fname" placeholder="Your first name" required>
-          </div>
-          <div class="form-group">
-            <label for="lname">Last Name</label>
-            <input type="text" id="lname" placeholder="Your last name" required>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="Your email address" required>
-          </div>
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" placeholder="Your phone number">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="company">Company Name</label>
-            <input type="text" id="company" placeholder="Your company name">
-          </div>
-          <div class="form-group">
-            <label for="crew">How many people on your crew?</label>
-            <select id="crew">
-              <option value="" disabled selected>Select size</option>
-              <option>Just me</option>
-              <option>2–4 people</option>
-              <option>5–10 people</option>
-              <option>11–20 people</option>
-              <option>20+ people</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group" style="margin-bottom:0">
-          <label for="problem">Where are you losing the most jobs right now?</label>
-          <textarea id="problem" placeholder="e.g. I miss calls when I'm on the job, leads go cold because I don't have time to follow up..."></textarea>
-        </div>
-        <button type="button" class="form-submit" onclick="submitForm()">Book My Free Call →</button>
-        <p class="form-note">We'll reach out within one business day to schedule your call.</p>
-      </div>
-      <div class="form-success" id="formSuccess">
-        <div class="form-success-icon">✅</div>
-        <h3>You're all set.</h3>
-        <p>We'll reach out within one business day to schedule your free strategy call. Check your email for a confirmation.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -1286,65 +1322,14 @@ document.querySelectorAll('.fade-up').forEach((el, i) => {
   observer.observe(el);
 });
 
-async function submitForm() {
-  const fname = document.getElementById('fname').value.trim();
-  const lname = document.getElementById('lname').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const company = document.getElementById('company').value.trim();
-  const crew = document.getElementById('crew').value;
-  const problem = document.getElementById('problem').value.trim();
-
-  if (!fname || !email) {
-    alert('Please fill in your name and email to book your call.');
-    return;
-  }
-
-  const btn = document.querySelector('.form-submit');
-  btn.textContent = 'Sending…';
-  btn.disabled = true;
-
-  try {
-    const res = await fetch('https://formspree.io/f/xlgakylb', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        'First Name': fname,
-        'Last Name': lname,
-        'Email': email,
-        'Phone': phone,
-        'Company': company,
-        'Crew Size': crew,
-        'Biggest Challenge': problem
-      })
-    });
-
-    if (res.ok) {
-      document.getElementById('formContent').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    } else {
-      const data = await res.json();
-      if (data.errors) {
-        alert('Something went wrong: ' + data.errors.map(e => e.message).join(', '));
-      } else {
-        alert('Something went wrong. Please try again or email us directly.');
-      }
-      btn.textContent = 'Book My Free Call →';
-      btn.disabled = false;
-    }
-  } catch (err) {
-    alert('Could not send — check your connection and try again.');
-    btn.textContent = 'Book My Free Call →';
-    btn.disabled = false;
-  }
-}
-
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', function(e) {
-    const target = document.querySelector(this.getAttribute('href'));
+    const href = this.getAttribute('href');
+    const target = document.querySelector(href);
     if (target) {
       e.preventDefault();
-      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+      const top = (href === '#top') ? 0 : target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   });
 });
